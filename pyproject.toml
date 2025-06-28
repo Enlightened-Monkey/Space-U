@@ -1,12 +1,13 @@
 [project]
 name = "space-u"
 version = "0.1.0"
-description = "Add your description here"
+description = "Projekt na kurs Bazy Danych - Space-U"
 readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "ipykernel>=6.29.5",
     "mysql-connector-python>=9.3.0",
+    "nbconvert>=7.16.6",
     "notebook>=7.4.3",
     "numpy>=2.3.1",
     "pandas>=2.3.0",
