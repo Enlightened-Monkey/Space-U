@@ -6,5 +6,7 @@
 
 > [!IMPORTANT]
 > **Wymagane paczki pythonowe znajdują się w pliku pyproject.**
+> 
 > **Wymagane programy do konwersji notebook'a: tex(xelatex)**
+> 
 > **Skrypt do konwersji: main.py**
