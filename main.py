@@ -2,6 +2,8 @@ import subprocess
 import sys
 import shutil
 from pathlib import Path
+import argparse
+
 
 def check_dependencies():
     """Checks for required packages."""
@@ -20,10 +22,9 @@ def check_dependencies():
         sys.exit(1)
 
 def convert_notebook_to_pdf(args):
-    notebook_path = args[1]
-    doctype = args[2] if len(args) > 2 else "pdf"
-        
-
+    notebook_path = args.notebook
+    doctype = args.type if args.type else "pdf"
+    no_inputs = "--TemplateExporter.exclude_input=True" if args.no_inputs else ""
 
     notebook_path = Path(notebook_path)
     if not notebook_path.exists():
@@ -36,6 +37,7 @@ def convert_notebook_to_pdf(args):
         "jupyter", "nbconvert",
         "--to", doctype,
         "--allow-chromium-download",
+        no_inputs,
         str(notebook_path)
     ]
 
@@ -47,8 +49,11 @@ def convert_notebook_to_pdf(args):
         sys.exit(1)
 
 if __name__ == "__main__":
-    if len(sys.argv) < 2:
-        print("Usage: python main.py <notebook.ipynb> <type>")
-        sys.exit(1)
+    parser = argparse.ArgumentParser(description="Convert Jupyter Notebook to PDF or HTML.")
+    parser.add_argument("-p", "--path", dest="notebook", help="Path to the Jupyter notebook file")
+    parser.add_argument("-t", "--type", dest="type", choices=["pdf", "html"], help="Output type (defaults to pdf)")
+    parser.add_argument("--no-inputs", dest="no_inputs", action="store_true", help="Exclude code inputs from the output")
 
-    convert_notebook_to_pdf(sys.argv)
+    args = parser.parse_args()
+
+    convert_notebook_to_pdf(args)
